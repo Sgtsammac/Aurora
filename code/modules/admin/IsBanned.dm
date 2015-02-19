@@ -52,6 +52,8 @@ world/IsBanned(key,address,computer_id)
 			AddBan(ckey(key), computer_id, "Bad IP", "Automated Ban", 0, 0)
 			return list("reason"="IP Blacklisted", "desc"="\nReason: This IP has been blacklisted from the server.\nIf you believe this is a mistake, please request help at [config.banappeals]")
 
+		msg_scopes("[key]'s blacklist check completed.")
+
 	if(config.ban_legacy_system)
 
 		//Ban Checking
@@ -105,6 +107,9 @@ world/IsBanned(key,address,computer_id)
 				expires = " The ban is for [duration] minutes and expires on [expiration] (server time)."
 
 			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban was applied by [ackey] on [bantime], [expires]"
+
+			log_access("Failed Login: [key] [computer_id] [address] - Banned [reason]")
+			message_admins("\blue Failed Login: [key] id:[computer_id] ip:[address] - Banned [reason]")
 
 			return list("reason"="[bantype]", "desc"="[desc]")
 
